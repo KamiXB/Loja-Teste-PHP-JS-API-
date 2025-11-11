@@ -1,0 +1,479 @@
+/* =================== VARIÁVEIS CSS =================== */
+:root {
+    --cor-primaria: #0a192f; /* Azul escuro/petróleo, quase preto */
+    --cor-secundaria: #172a45; /* Tom um pouco mais claro para fundos */
+    --cor-destaque: #64ffda; /* Verde vibrante/cian para destaque (mint/neon) */
+    --cor-texto-claro: #ccd6f6;
+    --cor-texto-suave: #8892b0;
+    --sombra-card: 0 10px 30px -15px rgba(2,12,27,0.7);
+    --sombra-header: 0 2px 4px rgba(0,0,0,0.4);
+    --transicao-suave: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+/* =================== BASE =================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
+    background: var(--cor-primaria); /* Fundo escuro */
+    color: var(--cor-texto-claro);
+    overflow-x: hidden;
+    opacity: 0;
+    animation: fadeBody 0.8s ease forwards;
+}
+
+/* Fade suave no carregamento */
+@keyframes fadeBody {
+    to { opacity: 1; }
+}
+
+/* =================== HEADER =================== */
+header {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    background: var(--cor-secundaria); /* Fundo um pouco mais claro que o body */
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: var(--sombra-header); /* Sombra mais sutil e dark */
+    opacity: 0;
+    animation: fadeDown 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s forwards;
+}
+
+@keyframes fadeDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+header h1 {
+    font-weight: 700;
+    font-size: 1.8em;
+    letter-spacing: 1.5px;
+    color: var(--cor-destaque); /* Título em cor de destaque */
+    text-shadow: 0 0 5px rgba(100,255,218,0.3);
+}
+
+/* Links de Navegação */
+header nav a {
+    color: var(--cor-texto-suave);
+    text-decoration: none;
+    font-weight: 500;
+    margin-left: 30px;
+    padding: 5px 0;
+    position: relative;
+    transition: var(--transicao-suave);
+}
+
+header nav a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    display: block;
+    margin-top: 5px;
+    right: 0;
+    background: var(--cor-destaque);
+    transition: width 0.3s ease;
+}
+
+header nav a:hover {
+    color: var(--cor-destaque);
+}
+
+header nav a:hover::after {
+    width: 100%;
+    left: 0;
+    background: var(--cor-destaque);
+}
+
+/* Imagem/Logo */
+header img {
+    height: 45px;
+    width: 45px;
+    border-radius: 50%; /* Circular para moderno */
+    background: var(--cor-destaque); /* Fundo de destaque */
+    padding: 3px;
+    margin-right: 12px;
+    vertical-align: middle;
+    box-shadow: 0 0 15px rgba(100,255,218,0.5);
+    transition: var(--transicao-suave);
+}
+header img:hover {
+    transform: rotate(360deg) scale(1.05); /* Rotação 360 */
+    box-shadow: 0 0 20px rgba(100,255,218,0.8);
+}
+
+/* =================== GRID DE PRODUTOS =================== */
+.produtos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px; /* Reduzi o gap para uma sensação mais coesa */
+    padding: 80px 20px 50px;
+    max-width: 1300px;
+    margin: auto;
+}
+
+/* Card de Produto */
+.produto {
+    background: var(--cor-secundaria); /* Fundo do card */
+    border-radius: 12px; /* Borda um pouco menor */
+    box-shadow: var(--sombra-card); /* Sombra elegante */
+    border: 1px solid rgba(100,255,218,0.1); /* Borda sutil */
+    padding: 30px;
+    width: 300px; /* Pouco mais largo */
+    text-align: center;
+    transition: var(--transicao-suave);
+    position: relative;
+    opacity: 0;
+    transform: translateY(25px);
+    animation: fadeUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.produto:nth-child(odd) {
+    animation-delay: 0.2s;
+}
+.produto:nth-child(even) {
+    animation-delay: 0.4s;
+}
+.produto:nth-child(3n) {
+    animation-delay: 0.6s;
+}
+
+@keyframes fadeUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.produto:hover {
+    transform: translateY(-5px); /* Efeito de elevação mais sutil */
+    box-shadow: 0 20px 40px -10px rgba(2,12,27,0.9);
+    border-color: var(--cor-destaque);
+}
+
+/* Imagem do Produto */
+.produto img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    transition: transform 0.4s ease, filter 0.3s ease;
+    filter: saturate(0.8) brightness(0.9); /* Filtro inicial para dar um ar mais dark */
+}
+
+.produto:hover img {
+    transform: scale(1.03); /* Zoom mais contido */
+    filter: saturate(1) brightness(1.05); /* Cores mais vivas no hover */
+}
+
+.produto h2 {
+    font-size: 1.3em;
+    margin: 20px 0 8px;
+    font-weight: 600;
+    color: var(--cor-texto-claro);
+}
+
+.produto p {
+    color: var(--cor-texto-suave);
+    font-size: 0.9em;
+    min-height: 40px; /* Um pouco menos de altura */
+}
+
+.produto .preco {
+    color: var(--cor-destaque);
+    font-weight: 700;
+    font-size: 1.3em;
+    margin: 15px 0;
+    letter-spacing: 1px;
+}
+
+/* Botão Moderno */
+.produto button {
+    background: var(--cor-destaque);
+    color: var(--cor-primaria); /* Texto escuro no botão de destaque */
+    border: none;
+    padding: 12px 28px;
+    border-radius: 4px; /* Borda mais quadrada */
+    font-size: 1em;
+    cursor: pointer;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    transition: var(--transicao-suave);
+    box-shadow: 0 0 0 rgba(100,255,218,0.3);
+}
+
+.produto button:hover {
+    background: #52e7c4; /* Tonalidade levemente diferente no hover */
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px -5px rgba(100,255,218,0.4); /* Sombra mais destacada */
+}
+
+/* =================== FOOTER =================== */
+footer {
+    background: var(--cor-secundaria);
+    color: var(--cor-texto-suave);
+    text-align: center;
+    padding: 25px;
+    font-size: 0.9em;
+    margin-top: 80px;
+    letter-spacing: 0.5px;
+    border-top: 1px solid rgba(100,255,218,0.1);
+    opacity: 0;
+    animation: fadeUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.6s forwards;
+}
+
+/* =================== RESPONSIVO =================== */
+@media (max-width: 900px) {
+    header {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+    header nav a {
+        margin: 0 15px;
+    }
+    .produtos {
+        padding: 40px 10px;
+        gap: 30px;
+    }
+    .produto {
+        width: 100%;
+        max-width: 350px;
+    }
+}
+
+/* =================== HEADER PROFISSIONAL =================== */
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--cor-texto-claro);
+    transition: var(--transicao-suave);
+}
+
+.logo-link:hover h1 {
+    color: var(--cor-destaque);
+}
+
+.logo-img {
+    height: 45px;
+    width: 45px;
+    border-radius: 50%;
+    background: var(--cor-destaque);
+    padding: 3px;
+    box-shadow: 0 0 15px rgba(100,255,218,0.5);
+    transition: var(--transicao-suave);
+}
+
+.logo-img:hover {
+    transform: rotate(360deg) scale(1.05);
+    box-shadow: 0 0 20px rgba(100,255,218,0.8);
+}
+
+/* Navegação */
+.nav-links {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+}
+
+.nav-links a {
+    color: var(--cor-texto-suave);
+    text-decoration: none;
+    font-weight: 500;
+    transition: var(--transicao-suave);
+    position: relative;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -3px;
+    left: 0;
+    background: var(--cor-destaque);
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: var(--cor-destaque);
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+/* Área do usuário */
+.user-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.avatar {
+    height: 42px;
+    width: 42px;
+    border-radius: 50%;
+    border: 2px solid var(--cor-destaque);
+    padding: 2px;
+    box-shadow: 0 0 8px rgba(100,255,218,0.4);
+    transition: var(--transicao-suave);
+}
+
+.avatar:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(100,255,218,0.6);
+}
+
+.user-nome {
+    display: block;
+    color: var(--cor-destaque);
+    font-weight: 600;
+    font-size: 0.95em;
+}
+
+.user-links {
+    display: flex;
+    gap: 10px;
+    font-size: 0.85em;
+}
+
+.user-links a {
+    color: var(--cor-texto-suave);
+    text-decoration: none;
+    transition: var(--transicao-suave);
+}
+
+.user-links a:hover {
+    color: var(--cor-destaque);
+}
+
+.admin-link {
+    color: #ffc107;
+    font-weight: 600;
+}
+
+.logout-link {
+    color: #ff6b6b;
+    font-weight: 600;
+}
+
+.login-btn {
+    background: var(--cor-destaque);
+    color: var(--cor-primaria);
+    font-weight: 700;
+    padding: 8px 16px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: var(--transicao-suave);
+}
+
+.login-btn:hover {
+    background: #52e7c4;
+    transform: translateY(-2px);
+}
+/* =================== DROPDOWN DO USUÁRIO =================== */
+.user-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.avatar {
+    height: 45px;
+    width: 45px;
+    border-radius: 50%;
+    border: 2px solid var(--cor-destaque);
+    padding: 2px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(100,255,218,0.4);
+    transition: var(--transicao-suave);
+}
+
+.avatar:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(100,255,218,0.7);
+}
+
+/* Menu Dropdown */
+.dropdown-menu {
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background: var(--cor-secundaria);
+    border: 1px solid rgba(100,255,218,0.2);
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(2,12,27,0.9);
+    width: 190px;
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+    transition: all 0.25s ease;
+    overflow: hidden;
+    z-index: 1000;
+}
+
+.dropdown-menu.ativo {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.dropdown-nome {
+    background: rgba(100,255,218,0.1);
+    padding: 12px;
+    font-weight: 600;
+    color: var(--cor-destaque);
+    text-align: center;
+    border-bottom: 1px solid rgba(100,255,218,0.15);
+}
+
+.dropdown-item {
+    display: block;
+    padding: 10px 15px;
+    color: var(--cor-texto-claro);
+    text-decoration: none;
+    font-size: 0.9em;
+    transition: var(--transicao-suave);
+}
+
+.dropdown-item:hover {
+    background: rgba(100,255,218,0.15);
+    color: var(--cor-destaque);
+    padding-left: 20px;
+}
+
+.dropdown-item.sair {
+    color: #ff6b6b;
+    font-weight: 600;
+}
+
+.dropdown-item.sair:hover {
+    background: rgba(255,107,107,0.1);
+    color: #ff8787;
+}

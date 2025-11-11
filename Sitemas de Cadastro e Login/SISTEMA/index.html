@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>LOGIN</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <style>
+        body {
+            background: #f5f5f5;
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+        fieldset {
+            border: none;
+            max-width: 400px;
+            margin: 60px auto 0 auto;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 12px #ccc;
+            padding: 40px 30px 30px 30px;
+        }
+        h1 {
+            color: #222;
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+        input[type="text"], input[type="password"] {
+            width: 90%;
+            padding: 10px;
+            border: 1px solid #bbb;
+            border-radius: 5px;
+            font-size: 1em;
+            margin-bottom: 15px;
+            background: #fafafa;
+            transition: border 0.2s;
+        }
+        input[type="text"]:focus, input[type="password"]:focus {
+            border: 1.5px solid #008000;
+            outline: none;
+        }
+        button {
+            background: #008000;
+            color: #fff;
+            border: none;
+            padding: 12px 40px;
+            border-radius: 5px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 10px;
+        }
+        button:hover {
+            background: #005700;
+        }
+        #resultado {
+            margin-top: 18px;
+            font-size: 1em;
+            color: #d32f2f;
+        }
+        a {
+            display: block;
+            text-align: center;
+            margin: 25px auto 0 auto;
+            color: #008000;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1em;
+            transition: color 0.2s;
+        }
+        a:hover {
+            color: #005700;
+            text-decoration: underline;
+        }
+    </style>
+    <script>
+        $(document).ready(function(){
+            $('#verificar').click(function (event) {
+                event.preventDefault();
+                var ds_loginL = $('#ds_loginL').val();
+                var senhaL = $("#senhaL").val();
+                $.ajax({
+                    url: "login.php",
+                    type: "POST",
+                    data: { ds_loginL: ds_loginL, senhaL: senhaL },
+                }).done(function(resposta) {
+                    if (resposta.includes("Usuário não encontrado!")) {
+                        $('#resultado').html(resposta);
+                    } else {
+                        window.location.href = resposta;
+                    }
+                }).fail(function(jqXHR, textStatus) {
+                    console.log("Request failed: " + textStatus);
+                }).always(function() {
+                    console.log("completou");
+                }); 
+            });
+        });
+    </script>
+</head>
+<body>
+    <fieldset>
+        <center>
+            <h1><i>Login</i></h1>
+            <input type="text" id="ds_loginL" placeholder="Email" required/>
+            <br>
+            <input type="password" id="senhaL" placeholder="Senha" required/>
+            <br>
+            <button id="verificar">Entrar</button>
+            <div id="resultado"></div>
+        </center>
+    </fieldset>
+    <a href="cadastro.html">Não tem conta? Cadastre-se aqui</a>
+</body>
+</html>
